@@ -1,0 +1,5 @@
+@host=http://localhost:5000/api
+# @name test
+GET http://localhost:5000/
+Content-Type: application/json 
+###
