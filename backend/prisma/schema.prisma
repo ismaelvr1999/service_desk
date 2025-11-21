@@ -14,12 +14,119 @@ datasource db {
 }
 
 model User {
-  id String @id 
-  first_name String
-  last_name String
-  email String @unique
-  phoneNumber String?
-  picture String?
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @default(now())
+  id               String          @id @default(uuid())
+  firstName        String
+  lastName         String
+  email            String          @unique
+  phoneNumber      String?
+  picture          String?
+  createdAt        DateTime        @default(now())
+  updatedAt        DateTime        @updatedAt
+  teams            UserTeam[]
+  ownedTeams       Team[]          @relation("TeamOwner")
+  requestedTickets Ticket[]        @relation("RequesterTicket")
+  assignedTickets  Ticket[]        @relation("AgentTicket")
+  comments         TicketComment[]
+  ticketLogs       TicketLog[]
+}
+
+model UserTeam {
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String
+  team      Team     @relation(fields: [teamId], references: [id])
+  teamId    String
+  roleId    String
+  role      Role     @relation(fields: [roleId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@id([userId, teamId])
+}
+
+model Ticket {
+  id          String          @id @default(uuid())
+  subject     String
+  requester   User            @relation(name: "RequesterTicket", fields: [requesterId], references: [id])
+  requesterId String
+  agent       User?           @relation(name: "AgentTicket", fields: [agentId], references: [id])
+  agentId     String?
+  team        Team            @relation(fields: [teamId], references: [id])
+  teamId      String
+  description String          @db.Text
+  status      TicketStatus
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @updatedAt
+  comments    TicketComment[]
+  logs        TicketLog[]
+}
+
+model TicketComment {
+  id        String   @id @default(uuid())
+  ticket    Ticket   @relation(fields: [ticketId], references: [id])
+  ticketId  String
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String
+  body      String   @db.Text
+  createdAt DateTime @default(now())
+}
+
+model TicketLog {
+  id        String       @id @default(uuid())
+  ticket    Ticket       @relation(fields: [ticketId], references: [id])
+  ticketId  String
+  user      User         @relation(fields: [userId], references: [id])
+  userId    String
+  oldStatus TicketStatus
+  newStatus TicketStatus
+  createdAt DateTime     @default(now())
+}
+
+model Team {
+  id          String     @id @default(uuid())
+  name        String
+  displayName String
+  email       String?
+  ownerId     String
+  owner       User       @relation(name: "TeamOwner", fields: [ownerId], references: [id])
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  agents      UserTeam[]
+  tickets     Ticket[]
+}
+
+model Role {
+  id          String           @id @default(uuid())
+  name        String           @unique
+  description String           @db.Text
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+  permissions RolePermission[]
+  users       UserTeam[]
+}
+
+model RolePermission {
+  role         Role       @relation(fields: [roleId], references: [id])
+  roleId       String
+  permission   Permission @relation(fields: [permissionId], references: [id])
+  permissionId String
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+
+  @@id([roleId, permissionId])
+}
+
+model Permission {
+  id          String           @id @default(uuid())
+  name        String
+  description String           @db.Text
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+  roles       RolePermission[]
+}
+
+enum TicketStatus {
+  OPEN
+  PENDING
+  ON_HOLD
+  CLOSED
 }
