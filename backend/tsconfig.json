@@ -9,6 +9,14 @@
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
+    "baseUrl": "./src",
+    "paths": {
+      "@container/*": ["container/*"],
+      "@lib/*": ["lib/*"],
+      "@middlewares/*": ["middlewares/*"],
+      "@module/*": ["modules/*"],
+      "@utils/*": ["utils/*"]
+    }
   },
   "include": ["src/**/*.ts"],
   "exclude": ["node_modules"]

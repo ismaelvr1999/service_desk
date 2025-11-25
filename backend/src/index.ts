@@ -1,4 +1,4 @@
-import container from "./container/register";
+import container from "@container/register";
 import app from "./app";
 
 (async () => {
