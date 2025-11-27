@@ -5,7 +5,10 @@ export const CreateUser = z.object({
     lastName: z.string(),
     password: z.string(),
     email: z.email(),
-    phoneNumber: z.string().optional(),
-    picture: z.string().optional()
+    phoneNumber: z.string().optional()
 });
 
+export const UserCredentials = z.object({
+    password: z.string(),
+    email: z.email()
+});

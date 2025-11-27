@@ -35,6 +35,7 @@ container.register({
     port: awilix.asValue(PORT),
     dbConfig: awilix.asValue(dbConfig),
     debugging: awilix.asValue(NODE_ENV === "development"),
+    secret: awilix.asValue(NODE_ENV === "development")
 })
 //DB Client
 container.register({
@@ -45,4 +46,8 @@ container.register({
 container.register({
     userService: awilix.asClass(require("@module/user/user.service").default),
     authService: awilix.asClass(require("@module/auth/auth.service").default)
+});
+//CONTROLLERS
+container.register({
+    authController: awilix.asClass(require("@module/auth/auth.controller").default)
 })

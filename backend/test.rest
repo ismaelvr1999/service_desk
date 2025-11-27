@@ -1,5 +1,18 @@
 @host=http://localhost:5000/api
-# @name test
+# @name health
 GET http://localhost:5000/
 Content-Type: application/json 
 ###
+
+# @name signup
+POST {{host}}/signup
+Content-Type: application/json
+
+{
+    "firstName": "john",
+    "lastName": "doe",
+    "password": "",
+    "email": "johndoe@gmail.com",
+    "phoneNumber": "33728394029"    
+}
+
