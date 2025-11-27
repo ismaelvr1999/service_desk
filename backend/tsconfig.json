@@ -9,13 +9,15 @@
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "baseUrl": "./src",
+    "baseUrl": ".",
     "paths": {
-      "@container/*": ["container/*"],
-      "@lib/*": ["lib/*"],
-      "@middlewares/*": ["middlewares/*"],
-      "@module/*": ["modules/*"],
-      "@utils/*": ["utils/*"]
+      "@container/*": ["src/container/*"],
+      "@lib/*": ["src/lib/*"],
+      "@middlewares/*": ["src/middlewares/*"],
+      "@module/*": ["src/modules/*"],
+      "@utils/*": ["src/utils/*"],
+      "@constants/*": ["src/constants/*"],
+      "@generated/*": ["generated/*"],
     }
   },
   "include": ["src/**/*.ts"],

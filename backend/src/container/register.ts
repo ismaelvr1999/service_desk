@@ -40,3 +40,9 @@ container.register({
 container.register({
     prisma: awilix.asValue(require("@lib/prisma").default)
 });
+
+//SERVICES
+container.register({
+    userService: awilix.asClass(require("@module/user/user.service").default),
+    authService: awilix.asClass(require("@module/auth/auth.service").default)
+})
