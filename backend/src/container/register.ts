@@ -11,7 +11,8 @@ const {
     DATABASE_HOST,
     DATABASE_PORT,
     CONNECTION_LIMIT,
-    NODE_ENV
+    NODE_ENV,
+    JWT_SECRET
 } = process.env;
 
 const dbConfig = {
@@ -35,7 +36,7 @@ container.register({
     port: awilix.asValue(PORT),
     dbConfig: awilix.asValue(dbConfig),
     debugging: awilix.asValue(NODE_ENV === "development"),
-    secret: awilix.asValue(NODE_ENV === "development")
+    secret: awilix.asValue(JWT_SECRET)
 })
 //DB Client
 container.register({
@@ -50,4 +51,8 @@ container.register({
 //CONTROLLERS
 container.register({
     authController: awilix.asClass(require("@module/auth/auth.controller").default)
+});
+//UTILS
+container.register({
+    jwt: awilix.asClass(require("@utils/jwt").default)
 })

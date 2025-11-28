@@ -4,10 +4,12 @@ import express, { Request, Response, NextFunction } from "express";
 import morgan from "morgan";
 import router from "./router";
 import { ZodError } from "zod";
+import cookieParser from "cookie-parser";
 const app = express();
 
 app.use(express.json());
 app.use(morgan("dev"));
+app.use(cookieParser());
 
 app.get("/", async (req, res) => {
     res.status(200).json({ ok: true, status: HttpStatus.OK });

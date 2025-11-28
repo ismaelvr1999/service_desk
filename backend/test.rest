@@ -15,4 +15,14 @@ Content-Type: application/json
     "email": "johndoe@gmail.com",
     "phoneNumber": "33728394029"    
 }
+###
 
+# @name login
+POST {{host}}/login
+Content-Type: application/json
+
+{
+    "password": "12345",
+    "email": "johndoe@gmail.com",
+    "phoneNumber": "33728394029"    
+}

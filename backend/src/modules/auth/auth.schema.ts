@@ -5,5 +5,6 @@ export const JWTPayload = z.object({
     firstName: z.string(),
     lastName: z.string(),
     email: z.email(),
-    phoneNumber: z.string().optional()
+    phoneNumber: z.string().nullable(),
+    picture: z.string().nullable()
 })
