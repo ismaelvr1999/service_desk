@@ -13,16 +13,39 @@ Content-Type: application/json
     "lastName": "doe",
     "password": "",
     "email": "johndoe@gmail.com",
-    "phoneNumber": "33728394029"    
+    "phoneNumber": "52000000"    
 }
 ###
 
 # @name login
+# @prompt email
+# @prompt pass
 POST {{host}}/login
 Content-Type: application/json
 
 {
-    "password": "12345",
-    "email": "johndoe@gmail.com",
-    "phoneNumber": "33728394029"    
+    "password": "{{pass}}",
+    "email": "{{email}}"
 }
+###
+@userId = {{login.response.body.profile.id}}
+# @name CreateTeam
+POST {{host}}/teams
+Content-Type: application/json
+
+{
+    "name": "devops",
+    "displayName": "devops",
+    "email": "devops@gmail.com",
+    "ownerId": "d4658f8b-40e0-4a9f-90cc-60a5a2498b8a"
+}
+###
+@teamId = {{CreateTeam.response.body.team.id}}
+# @name GetTeam
+GET {{host}}/teams/{{teamId}}
+###
+
+# @name DeleteTeam
+DELETE  {{host}}/teams/{{teamId}}
+###
+

@@ -40,17 +40,19 @@ container.register({
 })
 //DB Client
 container.register({
-    prisma: awilix.asValue(require("@lib/prisma").default)
+    prisma: awilix.asValue(require("@db/prisma").default)
 });
 
 //SERVICES
 container.register({
     userService: awilix.asClass(require("@module/user/user.service").default),
-    authService: awilix.asClass(require("@module/auth/auth.service").default)
+    authService: awilix.asClass(require("@module/auth/auth.service").default),
+    teamService: awilix.asClass(require("@module/team/team.service").default)
 });
 //CONTROLLERS
 container.register({
-    authController: awilix.asClass(require("@module/auth/auth.controller").default)
+    authController: awilix.asClass(require("@module/auth/auth.controller").default),
+    teamController: awilix.asClass(require("@module/team/team.controller").default),
 });
 //UTILS
 container.register({

@@ -17,6 +17,7 @@
       "@module/*": ["src/modules/*"],
       "@utils/*": ["src/utils/*"],
       "@constants/*": ["src/constants/*"],
+      "@db/*": ["src/db/*"],
       "@generated/*": ["generated/*"],
     }
   },
