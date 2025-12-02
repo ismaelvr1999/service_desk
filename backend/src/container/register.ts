@@ -42,7 +42,14 @@ container.register({
 container.register({
     prisma: awilix.asValue(require("@db/prisma").default)
 });
-
+//UTILS
+container.register({
+    jwt: awilix.asClass(require("@utils/jwt").default)
+});
+//MIDDLEWARES
+container.register({
+    authMiddleware: awilix.asClass(require("@middlewares/auth.middleware").default)
+});
 //SERVICES
 container.register({
     userService: awilix.asClass(require("@module/user/user.service").default),
@@ -54,7 +61,4 @@ container.register({
     authController: awilix.asClass(require("@module/auth/auth.controller").default),
     teamController: awilix.asClass(require("@module/team/team.controller").default),
 });
-//UTILS
-container.register({
-    jwt: awilix.asClass(require("@utils/jwt").default)
-})
+

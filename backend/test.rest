@@ -34,13 +34,24 @@ POST {{host}}/teams
 Content-Type: application/json
 
 {
-    "name": "devops",
+    "name": "devops 4",
     "displayName": "devops",
     "email": "devops@gmail.com",
     "ownerId": "d4658f8b-40e0-4a9f-90cc-60a5a2498b8a"
 }
 ###
+
 @teamId = {{CreateTeam.response.body.team.id}}
+# @name UpdateTeam
+PUT {{host}}/teams/{{teamId}}
+Content-Type: application/json
+
+{
+    "name": "devops up",
+    "displayName": "devops",
+    "email": "devops@gmail.com"
+}
+###
 # @name GetTeam
 GET {{host}}/teams/{{teamId}}
 ###

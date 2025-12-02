@@ -18,6 +18,7 @@ export default class TeamService {
     }
 
     async updateTeam(id: string, data: EditTeamDTO) {
+        //TODO: No record was found for an update.
         return this.prisma.team.update({
             where: {
                 id
