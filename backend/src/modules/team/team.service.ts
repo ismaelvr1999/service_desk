@@ -1,6 +1,5 @@
 import { PrismaClient } from "@generated/prisma/internal/class";
-import { CreateTeamDTO, EditTeamDTO } from "./team.dto";
-import { PrismaClientKnownRequestError } from "@prisma/client/runtime/client";
+import { CreateTeamDTO, EditTeamDTO, AddAgentDTO } from "./team.dto";
 import ApiError from "@/src/utils/apiError";
 import HttpStatus from "@/src/constants/httpStatuses";
 export default class TeamService {
@@ -46,6 +45,15 @@ export default class TeamService {
             }
             throw new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Error in delete team")
         }
+    }
+
+    async addAgent(agent:AddAgentDTO){
+        //TODO: getRole using agent.roleName
+        /* return this.prisma.userTeam.create({
+            data:{
+
+            }
+        }) */
     }
 
 }
