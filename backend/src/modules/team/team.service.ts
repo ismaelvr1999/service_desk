@@ -1,5 +1,8 @@
 import { PrismaClient } from "@generated/prisma/internal/class";
 import { CreateTeamDTO, EditTeamDTO } from "./team.dto";
+import { PrismaClientKnownRequestError } from "@prisma/client/runtime/client";
+import ApiError from "@/src/utils/apiError";
+import HttpStatus from "@/src/constants/httpStatuses";
 export default class TeamService {
     constructor(private prisma: PrismaClient) { }
 
@@ -18,21 +21,31 @@ export default class TeamService {
     }
 
     async updateTeam(id: string, data: EditTeamDTO) {
-        //TODO: No record was found for an update.
-        return this.prisma.team.update({
-            where: {
-                id
-            },
-            data
-        });
+        try {
+            return await this.prisma.team.update({ where: { id }, data });
+        }
+        catch (error: any) {
+            if (error.code == "P2025") {
+                throw new ApiError(HttpStatus.NOT_FOUND, "Team not found");
+            }
+            throw new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Error in update team")
+        }
     }
 
     async deleteTeam(id: string) {
-        return this.prisma.team.delete({
-            where: {
-                id
+        try {
+            return this.prisma.team.delete({
+                where: {
+                    id
+                }
+            });
+        }
+        catch (error: any) {
+            if (error.code == "P2025") {
+                throw new ApiError(HttpStatus.NOT_FOUND, "Team not found");
             }
-        });
+            throw new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Error in delete team")
+        }
     }
 
 }
