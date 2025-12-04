@@ -55,7 +55,16 @@ Content-Type: application/json
 # @name GetTeam
 GET {{host}}/teams/{{teamId}}
 ###
+# @name AddAgent
+POST {{host}}/teams/884b8327-3213-4431-800e-21cac7ffc807/agents
+Content-Type: application/json
 
+{
+    "userId": "884b8327-3213-4431-800e-21cac7ffc807",
+    "teamId": "884b8327-3213-4431-800e-21cac7ffc807",
+    "roleName": "admin"
+}
+###
 # @name DeleteTeam
 DELETE  {{host}}/teams/{{teamId}}
 ###

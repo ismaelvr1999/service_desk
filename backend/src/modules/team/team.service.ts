@@ -1,9 +1,13 @@
 import { PrismaClient } from "@generated/prisma/internal/class";
 import { CreateTeamDTO, EditTeamDTO, AddAgentDTO } from "./team.dto";
-import ApiError from "@/src/utils/apiError";
-import HttpStatus from "@/src/constants/httpStatuses";
+import ApiError from "@utils/apiError";
+import HttpStatus from "@constants/httpStatuses";
+import RoleService from "@module/role/role.service";
 export default class TeamService {
-    constructor(private prisma: PrismaClient) { }
+    constructor(
+        private prisma: PrismaClient,
+        private roleService: RoleService
+    ) { }
 
     async createTeam(newTeam: CreateTeamDTO) {
         return this.prisma.team.create({
@@ -47,13 +51,16 @@ export default class TeamService {
         }
     }
 
-    async addAgent(agent:AddAgentDTO){
-        //TODO: getRole using agent.roleName
-        /* return this.prisma.userTeam.create({
-            data:{
-
-            }
-        }) */
+    async addAgent(agent: AddAgentDTO) {
+        
+        const { userId, teamId, roleName } = agent
+        const role = await this.roleService.getRoleByName(roleName);
+        const data = {
+            userId,
+            teamId,
+            roleId: role.id
+        }
+        return this.prisma.userTeam.create({ data });
     }
 
 }
