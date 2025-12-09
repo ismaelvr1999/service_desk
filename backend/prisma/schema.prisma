@@ -36,8 +36,8 @@ model UserTeam {
   userId    String
   team      Team     @relation(fields: [teamId], references: [id])
   teamId    String
-  roleId    String //TODO: roleId -> roleName
-  role      Role     @relation(fields: [roleId], references: [id])
+  roleName  String
+  role      Role     @relation(fields: [roleName], references: [name])
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
