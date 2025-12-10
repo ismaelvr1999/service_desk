@@ -34,10 +34,10 @@ POST {{host}}/teams
 Content-Type: application/json
 
 {
-    "name": "devops 4",
+    "name": "devops 5",
     "displayName": "devops",
     "email": "devops@gmail.com",
-    "ownerId": "d4658f8b-40e0-4a9f-90cc-60a5a2498b8a"
+    "ownerId": "{{userId}}"
 }
 ###
 
@@ -55,7 +55,7 @@ Content-Type: application/json
 # @name GetTeam
 GET {{host}}/teams/{{teamId}}
 ###
-# @name AddAgent
+# @name AddAgentToTeam
 POST {{host}}/teams/{{teamId}}/agents
 Content-Type: application/json
 
@@ -66,6 +66,15 @@ Content-Type: application/json
 }
 ###
 # @name DeleteTeam
-DELETE  {{host}}/teams/{{teamId}}
+DELETE {{host}}/teams/{{teamId}}
+###
+# @name RemoveAgentFromTeam
+DELETE  {{host}}/teams/{{teamId}}/agents
+Content-Type: application/json
+
+{
+    "userId":"{{userId}}",
+    "teamId": "{{teamId}}"
+}
 ###
 

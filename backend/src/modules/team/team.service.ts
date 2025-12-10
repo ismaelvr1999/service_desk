@@ -1,5 +1,10 @@
 import { PrismaClient } from "@generated/prisma/internal/class";
-import { CreateTeamDTO, EditTeamDTO, AddAgentDTO } from "./team.dto";
+import {
+    CreateTeamDTO,
+    EditTeamDTO,
+    AddAgentDTO,
+    RemoveAgentDTO
+} from "./team.dto";
 import handlerPrismaError from "@/src/utils/handlerPrismaError";
 export default class TeamService {
     constructor(
@@ -36,6 +41,17 @@ export default class TeamService {
     async addAgent(agent: AddAgentDTO) {
         return this.prisma.userTeam.create({ data: agent })
             .catch(handlerPrismaError);
+    }
+    async removeAgent(agent: RemoveAgentDTO) {
+        const { userId, teamId } = agent;
+        return this.prisma.userTeam.delete({
+            where: {
+                userId_teamId: {
+                    userId,
+                    teamId
+                }
+            }
+        }).catch(handlerPrismaError)
     }
 
 }

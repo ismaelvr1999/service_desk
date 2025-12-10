@@ -36,3 +36,8 @@ export const AddAgent = z.object({
     teamId: UserTeam.shape.teamId,
     roleName: z.string()
 });
+
+export const RemoveAgent = z.object({
+    userId: UserTeam.shape.userId,
+    teamId: UserTeam.shape.teamId
+});
