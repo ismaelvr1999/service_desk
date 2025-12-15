@@ -6,4 +6,7 @@ router.use(authRouter);
 
 import teamRouter from "@module/team/team.router";
 router.use(teamRouter);
+
+import ticketRouter from "@module/ticket/ticket.router";
+router.use(ticketRouter);
 export default router;

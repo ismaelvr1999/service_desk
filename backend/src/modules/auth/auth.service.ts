@@ -1,3 +1,4 @@
+import handlerPrismaError from "@/src/utils/handlerPrismaError";
 import HttpStatus from "@constants/httpStatuses";
 import { CreateUserDTO, UserCredentialsDTO } from "@module/user/user.dto";
 import UserService from "@module/user/user.service";
@@ -9,7 +10,7 @@ export default class AuthService {
 
     async signUp(newUser: CreateUserDTO) {
         newUser.password = await bcrypt.hash(newUser.password, 10);
-        await this.userService.createUser(newUser);
+        await this.userService.createUser(newUser).catch(handlerPrismaError);
     }
 
     async login(userCredentials: UserCredentialsDTO) {
@@ -19,7 +20,7 @@ export default class AuthService {
             throw new ApiError(HttpStatus.UNAUTHORIZED, "Password incorrect");
         }
         const payload = this.jwt.getPayload(user);
-        const token = this.jwt.signToken(payload)
+        const token = this.jwt.signToken(payload);
         return { token, profile: payload }
     }
 }

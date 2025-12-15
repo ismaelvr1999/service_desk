@@ -78,3 +78,35 @@ Content-Type: application/json
 }
 ###
 
+# @name CreateTicket
+POST {{host}}/tickets
+Content-Type: application/json
+
+{
+    "subject":"test",
+    "requesterId":"{{userId}}",
+    "agentId":"{{userId}}",
+    "teamId":"{{teamId}}",
+    "description": "{{teamId}}",
+    "status": "OPEN"
+}
+###
+@ticketId = {{CreateTicket.response.body.ticket.id}}
+
+# @name GetTicket
+GET {{host}}/tickets/{{ticketId}}
+###
+
+# @name UpdateTicketStatus
+PATCH {{host}}/tickets/{{ticketId}}/status
+Content-Type: application/json
+
+{
+    "status": "CLOSED"
+}
+###
+
+# @name deleteTicket
+DELETE {{host}}/tickets/{{ticketId}}/
+
+###

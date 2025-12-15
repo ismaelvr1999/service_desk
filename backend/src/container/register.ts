@@ -55,11 +55,13 @@ container.register({
     userService: awilix.asClass(require("@module/user/user.service").default),
     authService: awilix.asClass(require("@module/auth/auth.service").default),
     teamService: awilix.asClass(require("@module/team/team.service").default),
-    roleService: awilix.asClass(require("@module/role/role.service").default)
+    roleService: awilix.asClass(require("@module/role/role.service").default),
+    ticketService: awilix.asClass(require("@module/ticket/ticket.service").default)
 });
 //CONTROLLERS
 container.register({
     authController: awilix.asClass(require("@module/auth/auth.controller").default),
     teamController: awilix.asClass(require("@module/team/team.controller").default),
+    ticketController: awilix.asClass(require("@module/ticket/ticket.controller").default),
 });
 
