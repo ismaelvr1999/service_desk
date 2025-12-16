@@ -1,4 +1,4 @@
-import { TicketStatus } from "@/generated/prisma/enums";
+import { TicketStatus } from "@generated/prisma/enums";
 import * as z from "zod";
 
 export const Ticket = z.object({
@@ -20,4 +20,17 @@ export const CreateTicket = z.object({
     teamId: Ticket.shape.teamId,
     description: Ticket.shape.description,
     status: Ticket.shape.status
+});
+
+export const CreateTicketLog = z.object({
+    ticketId: Ticket.shape.id,
+    userId: z.uuid(),
+    oldStatus: Ticket.shape.status,
+    newStatus: Ticket.shape.status
+});
+
+export const CreateTicketComment = z.object({
+    ticketId: Ticket.shape.id,
+    userId: z.uuid(),
+    body: z.string()
 });

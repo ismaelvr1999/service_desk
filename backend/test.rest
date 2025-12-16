@@ -102,11 +102,24 @@ PATCH {{host}}/tickets/{{ticketId}}/status
 Content-Type: application/json
 
 {
-    "status": "CLOSED"
+    "ticketId": "{{ticketId}}",
+    "newStatus": "ON_HOLD",    
+    "oldStatus": "CLOSED",
+    "userId": "{{userId}}"
 }
 ###
 
-# @name deleteTicket
+# @name DeleteTicket
 DELETE {{host}}/tickets/{{ticketId}}/
 
+###
+# @name CreateTicketComment
+POST {{host}}/tickets/{{ticketId}}/comments
+Content-Type: application/json
+
+{
+    "ticketId":"{{ticketId}}",
+    "userId":"{{userId}}",
+    "body": "test comment"
+}
 ###

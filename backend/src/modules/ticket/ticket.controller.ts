@@ -1,8 +1,9 @@
 import { Request, Response } from "express";
 import TicketService from "./ticket.service";
-import { CreateTicket } from "./ticket.schema";
+import { CreateTicket, CreateTicketComment, CreateTicketLog } from "./ticket.schema";
 import HttpStatus from "@constants/httpStatuses";
 import { Ticket } from "./ticket.schema";
+import { AuthRequest } from "@/src/types/auth.type";
 
 export default class TicketController {
     private service: TicketService;
@@ -10,28 +11,33 @@ export default class TicketController {
         this.service = ticketService;
     }
 
-    async createTicket(req: Request, res: Response) {
+    async createTicket(req: AuthRequest, res: Response) {
         const newTicket = CreateTicket.parse(req.body);
         const ticket = await this.service.createTicket(newTicket);
         res.status(HttpStatus.CREATED).json({ ok: true, ticket });
     }
 
-    async getTicket(req: Request, res: Response) {
+    async getTicket(req: AuthRequest, res: Response) {
         const ticketId = Ticket.shape.id.parse(req.params.id);
         const ticket = await this.service.getTicket(ticketId);
         res.status(HttpStatus.OK).json({ ok: true, ticket });
     }
 
-    async deleteTicket(req: Request, res: Response) {
+    async deleteTicket(req: AuthRequest, res: Response) {
         const ticketId = Ticket.shape.id.parse(req.params.id);
         await this.service.deleteTicket(ticketId);
         res.status(HttpStatus.OK).json({ ok: true });
     }
 
-    async updateTicketStatus(req: Request, res: Response) {
-        const ticketId = Ticket.shape.id.parse(req.params.id);
-        const newStatus = Ticket.shape.status.parse(req.body.status);
-        await this.service.updateTicketStatus(ticketId, newStatus);
+    async updateTicketStatus(req: AuthRequest, res: Response) {
+        const ticketStatus = CreateTicketLog.parse(req.body);
+        await this.service.updateTicketStatus(ticketStatus);
+        res.status(HttpStatus.OK).json({ ok: true });
+    }
+
+    async createTicketComment(req: AuthRequest, res: Response) {
+        const newComment = CreateTicketComment.parse(req.body);
+        await this.service.createTicketComment(newComment);
         res.status(HttpStatus.OK).json({ ok: true });
     }
 }

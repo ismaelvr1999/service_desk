@@ -32,9 +32,9 @@ model User {
 }
 
 model UserTeam {
-  user      User     @relation(fields: [userId], references: [id]) // TODO: add delete on cascade
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade) 
   userId    String
-  team      Team     @relation(fields: [teamId], references: [id]) // TODO: add delete on cascade
+  team      Team     @relation(fields: [teamId], references: [id], onDelete: Cascade) 
   teamId    String
   roleName  String
   role      Role     @relation(fields: [roleName], references: [name])
@@ -51,7 +51,7 @@ model Ticket {
   requesterId String
   agent       User?           @relation(name: "AgentTicket", fields: [agentId], references: [id])
   agentId     String?
-  team        Team            @relation(fields: [teamId], references: [id])
+  team        Team            @relation(fields: [teamId], references: [id], onDelete: Cascade)
   teamId      String
   description String          @db.Text
   status      TicketStatus
@@ -63,7 +63,7 @@ model Ticket {
 
 model TicketComment {
   id        String   @id @default(uuid())
-  ticket    Ticket   @relation(fields: [ticketId], references: [id]) // TODO: add delete on cascade
+  ticket    Ticket   @relation(fields: [ticketId], references: [id], onDelete: Cascade) 
   ticketId  String
   user      User     @relation(fields: [userId], references: [id])
   userId    String
@@ -73,7 +73,7 @@ model TicketComment {
 
 model TicketLog {
   id        String       @id @default(uuid())
-  ticket    Ticket       @relation(fields: [ticketId], references: [id]) // TODO: add delete on cascade
+  ticket    Ticket       @relation(fields: [ticketId], references: [id], onDelete: Cascade) 
   ticketId  String
   user      User         @relation(fields: [userId], references: [id]) 
   userId    String
@@ -106,9 +106,9 @@ model Role {
 }
 
 model RolePermission {
-  role         Role       @relation(fields: [roleId], references: [id])
+  role         Role       @relation(fields: [roleId], references: [id], onDelete: Cascade)
   roleId       String
-  permission   Permission @relation(fields: [permissionId], references: [id])
+  permission   Permission @relation(fields: [permissionId], references: [id], onDelete: Cascade)
   permissionId String
   createdAt    DateTime   @default(now())
   updatedAt    DateTime   @updatedAt
