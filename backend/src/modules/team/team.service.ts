@@ -54,4 +54,26 @@ export default class TeamService {
         }).catch(handlerPrismaError)
     }
 
+    async getTeamAgents(id: string) {
+        return this.prisma.team.findUnique({
+            where: {
+                id
+            },
+            include: {
+                agents: {
+                    include: {
+                        user: {
+                            select: {
+                                id: true,
+                                firstName: true,
+                                lastName: true,
+                                email: true
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    }
+
 }

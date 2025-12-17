@@ -63,5 +63,6 @@ container.register({
     authController: awilix.asClass(require("@module/auth/auth.controller").default),
     teamController: awilix.asClass(require("@module/team/team.controller").default),
     ticketController: awilix.asClass(require("@module/ticket/ticket.controller").default),
+    userController: awilix.asClass(require("@module/user/user.controller").default),
 });
 

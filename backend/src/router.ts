@@ -9,4 +9,7 @@ router.use(teamRouter);
 
 import ticketRouter from "@module/ticket/ticket.router";
 router.use(ticketRouter);
+
+import userRouter from "@module/user/user.router";
+router.use(userRouter);
 export default router;
