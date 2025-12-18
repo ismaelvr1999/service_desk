@@ -80,13 +80,15 @@ Content-Type: application/json
 # @name GetTeamAgents
 GET {{host}}/teams/{{teamId}}/agents
 ###
-//TODO
-# @name UpdateTeamAgents
+
+# @name UpdateTeamAgent
 PUT {{host}}/teams/{{teamId}}/agents
+Content-Type: application/json
+
 {
-    userId: "{{userId}}",
-    teamId: "{{userId}}",
-    roleName: "agent"
+    "userId": "{{userId}}",
+    "teamId": "{{teamId}}",
+    "roleName": "agent"
 }
 ###
 

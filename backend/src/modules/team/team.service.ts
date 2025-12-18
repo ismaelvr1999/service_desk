@@ -3,7 +3,8 @@ import {
     CreateTeamDTO,
     EditTeamDTO,
     AddAgentDTO,
-    RemoveAgentDTO
+    RemoveAgentDTO,
+    UpdateTeamAgentDTO
 } from "./team.dto";
 import handlerPrismaError from "@/src/utils/handlerPrismaError";
 export default class TeamService {
@@ -74,6 +75,20 @@ export default class TeamService {
                 }
             }
         });
+    }
+
+    async updateTeamAgent(data: UpdateTeamAgentDTO) {
+        return this.prisma.userTeam.update({
+            where: {
+                userId_teamId: {
+                    userId: data.userId,
+                    teamId: data.teamId
+                }
+            },
+            data: {
+                roleName: data.roleName
+            }
+        }).catch(handlerPrismaError);
     }
 
 }

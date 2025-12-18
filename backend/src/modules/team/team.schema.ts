@@ -13,7 +13,7 @@ export const Team = z.object({
 export const UserTeam = z.object({
     userId: z.uuid(),
     teamId: z.uuid(),
-    roleId: z.uuid(),
+    roleName: z.string(),
     createdAt: z.date(),
     updatedAt: z.date()
 })
@@ -41,3 +41,9 @@ export const RemoveAgent = z.object({
     userId: UserTeam.shape.userId,
     teamId: UserTeam.shape.teamId
 });
+
+export const UpdateTeamAgent = z.object({
+    userId: UserTeam.shape.userId,
+    teamId: UserTeam.shape.teamId,
+    roleName: UserTeam.shape.roleName 
+}); 

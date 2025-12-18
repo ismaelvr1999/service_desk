@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import TeamService from "./team.service";
-import { AddAgent, CreateTeam, EditTeam, RemoveAgent } from "./team.schema";
+import { AddAgent, CreateTeam, EditTeam, RemoveAgent, UpdateTeamAgent } from "./team.schema";
 import { uuid } from "zod";
 import HttpStatus from "@constants/httpStatuses";
 import { AuthRequest } from "@/src/types/auth.type";
@@ -51,9 +51,16 @@ export default class TeamController {
         await this.service.removeAgent(agent);
         res.status(HttpStatus.OK).json({ ok: true });
     }
+    
     async getTeamAgents(req: AuthRequest, res: Response) {
         const teamId = uuid().parse(req.params.id);
         const team = await this.service.getTeamAgents(teamId);
         res.status(HttpStatus.OK).json({ ok: true, agents: team?.agents });
+    }
+
+    async updateTeamAgent(req: AuthRequest, res: Response) {
+        const agent = UpdateTeamAgent.parse(req.body)
+        await this.service.updateTeamAgent(agent);
+        res.status(HttpStatus.OK).json({ ok: true });
     }
 }
