@@ -1,10 +1,10 @@
-import { Request, Response } from "express";
+import { Response } from "express";
 import TicketService from "./ticket.service";
 import { CreateTicket, CreateTicketComment, CreateTicketLog } from "./ticket.schema";
 import HttpStatus from "@constants/httpStatuses";
 import { Ticket } from "./ticket.schema";
 import { AuthRequest } from "@/src/types/auth.type";
-
+import { uuid } from "zod";
 export default class TicketController {
     private service: TicketService;
     constructor(ticketService: TicketService) {
@@ -39,5 +39,24 @@ export default class TicketController {
         const newComment = CreateTicketComment.parse(req.body);
         await this.service.createTicketComment(newComment);
         res.status(HttpStatus.OK).json({ ok: true });
+    }
+
+    async updateTicketAgent(req: AuthRequest, res: Response) {
+        const ticketId = Ticket.shape.id.parse(req.params.id);
+        const agentId = uuid().parse(req.body.agentId);
+        await this.service.updateTicketAgent(ticketId, agentId);
+        res.status(HttpStatus.OK).json({ ok: true });
+    }
+
+    async getTicketLogs(req: AuthRequest, res: Response) {
+        const ticketId = Ticket.shape.id.parse(req.params.id);
+        const logs = await this.service.getTicketLogs(ticketId);
+        res.status(HttpStatus.OK).json({ ok: true, logs });
+    }
+
+    async getTicketComments(req: AuthRequest, res: Response) {
+        const ticketId = Ticket.shape.id.parse(req.params.id);
+        const comments = await this.service.getTicketComments(ticketId);
+        res.status(HttpStatus.OK).json({ ok: true, comments });
     }
 }

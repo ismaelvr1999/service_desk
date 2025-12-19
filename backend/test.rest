@@ -123,13 +123,13 @@ Content-Type: application/json
 # @name GetTicket
 GET {{host}}/tickets/{{ticketId}}
 ###
-//TODO
+
 # @name UpdateTicketAgent
 PATCH {{host}}/tickets/{{ticketId}}/agent
 Content-Type: application/json
 
 {
-    agentId: "{{userId}}"
+    "agentId": "{{userId}}"
 }
 ###
 
@@ -145,16 +145,13 @@ Content-Type: application/json
 }
 ###
 
-//TODO
 # @name getTicketLogs
 GET {{host}}/tickets/{{ticketId}}/logs
 ###
 
-//TODO
 # @name getTicketComments
-GET {{host}}/tickets/{{ticketId}}/logs
+GET {{host}}/tickets/{{ticketId}}/comments
 ###
-
 
 # @name DeleteTicket
 DELETE {{host}}/tickets/{{ticketId}}/

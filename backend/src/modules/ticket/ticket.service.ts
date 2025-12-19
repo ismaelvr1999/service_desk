@@ -24,19 +24,54 @@ export default class TicketService {
 
     async deleteTicket(id: string) {
         await this.prisma.ticket
-        .delete({ where: { id } })
-        .catch(handlerPrismaError);
+            .delete({ where: { id } })
+            .catch(handlerPrismaError);
     }
 
     async createTicketLog(data: CreateTicketLogDTO) {
         await this.prisma.ticketLog
-        .create({ data })
-        .catch(handlerPrismaError);
+            .create({ data })
+            .catch(handlerPrismaError);
     }
 
-    async createTicketComment(data: CreateTicketCommentDTO){
+    async createTicketComment(data: CreateTicketCommentDTO) {
         await this.prisma.ticketComment
-        .create({data})
-        .catch(handlerPrismaError);
+            .create({ data })
+            .catch(handlerPrismaError);
+    }
+
+    async updateTicketAgent(ticketId: string, agentId: string) {
+        await this.prisma.ticket.update({
+            where:
+            {
+                id: ticketId
+            },
+            data:
+            {
+                agentId
+            }
+        }).catch(handlerPrismaError);
+    }
+
+    async getTicketLogs(ticketId: string) {
+        return this.prisma.ticketLog.findMany({
+            where: {
+                ticketId
+            },
+            orderBy: {
+                createdAt: "asc"
+            }
+        });
+    }
+
+    async getTicketComments(ticketId: string) {
+        return this.prisma.ticketComment.findMany({
+            where: {
+                ticketId
+            },
+            orderBy: {
+                createdAt: "asc"
+            }
+        })
     }
 }
