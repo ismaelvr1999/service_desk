@@ -6,16 +6,20 @@ import {
     RemoveAgentDTO,
     UpdateTeamAgentDTO
 } from "./team.dto";
-import handlerPrismaError from "@/src/utils/handlerPrismaError";
+import handlerPrismaError from "@utils/handlerPrismaError";
+import ApiError from "@utils/apiError";
+import HttpStatus from "@constants/httpStatuses";
 export default class TeamService {
     constructor(
         private prisma: PrismaClient
     ) { }
 
     async createTeam(newTeam: CreateTeamDTO) {
-        return this.prisma.team.create({
+        const team = await this.prisma.team.create({
             data: newTeam
         });
+        await this.addAgent({ userId: newTeam.ownerId, teamId: team.id, roleName: "admin" })
+        return team;
     }
 
     async getTeam(id: string) {
@@ -91,4 +95,19 @@ export default class TeamService {
         }).catch(handlerPrismaError);
     }
 
+    async getTeamTickets(id: string) {
+
+        const team = await this.prisma.team.findUnique({
+            select: {
+                tickets: true
+            },
+            where: {
+                id
+            }
+        });
+        if (team === null) {
+            throw new ApiError(HttpStatus.NOT_FOUND,"Team not found")
+        }
+        return team.tickets
+    }
 }

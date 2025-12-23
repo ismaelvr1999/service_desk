@@ -15,4 +15,6 @@ router.get("/teams/:id/agents", authUser, controller.getTeamAgents.bind(controll
 router.post("/teams/:id/agents", authUser, controller.addAgent.bind(controller));
 router.put("/teams/:id/agents", authUser, controller.updateTeamAgent.bind(controller));
 router.delete("/teams/:id/agents", authUser, controller.removeAgent.bind(controller));
+
+router.get("/teams/:id/tickets", authUser, controller.getTeamTickets.bind(controller))
 export default router;

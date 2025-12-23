@@ -43,7 +43,7 @@ export default class UserService {
     async getUserTeams(id: string) {
         const userTeams = await this.prisma.user.findUnique({
             select: {
-                
+
                 teams: {
                     select: {
                         roleName: true,
@@ -56,9 +56,31 @@ export default class UserService {
             }
         });
 
-        if(userTeams === null){
+        if (userTeams === null) {
             return userTeams;
         }
         return userTeams.teams;
+    }
+
+    async getUserTeamRole(userId: string, teamId: string) {
+        return this.prisma.userTeam.findUnique({
+            select: {
+                roleName: true
+            },
+            where: {
+                userId_teamId: {
+                    userId,
+                    teamId,
+                }
+            }
+        })
+    }
+
+    async getUserSentTickets(userId: string){
+        return this.prisma.ticket.findMany({
+            where:{
+                requesterId: userId
+            }
+        })
     }
 }

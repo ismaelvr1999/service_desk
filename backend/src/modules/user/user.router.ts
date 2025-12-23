@@ -8,5 +8,6 @@ const router = Router();
 
 router.get("/users/profile",authUser,controller.getUserProfile.bind(controller));
 router.get("/users/:id/teams",authUser,controller.getUserTeams.bind(controller));
+router.get("/users/:id/tickets",authUser,controller.getUserSentTickets.bind(controller));
 
 export default router;

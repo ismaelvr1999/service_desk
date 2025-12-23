@@ -21,4 +21,10 @@ export default class UserController {
         const teams = await this.service.getUserTeams(id);
         res.status(HttpStatus.OK).json({ ok: true, teams });
     }
+
+    async getUserSentTickets(req: AuthRequest, res: Response) {
+        const { id } = JWTPayload.parse(req.user);
+        const tickets = await this.service.getUserSentTickets(id);
+        res.status(HttpStatus.OK).json({ ok: true, tickets });
+    }
 }

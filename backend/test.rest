@@ -38,6 +38,10 @@ GET {{host}}/users/profile
 GET {{host}}/users/{{userId}}/teams
 ###
 
+# @name GetSentTickets
+GET {{host}}/users/{{userId}}/tickets
+###
+
 # @name CreateTeam
 POST {{host}}/teams
 Content-Type: application/json
@@ -81,6 +85,10 @@ Content-Type: application/json
 GET {{host}}/teams/{{teamId}}/agents
 ###
 
+# @name GetTeamTickets
+GET {{host}}/teams/{{teamId}}/tickets
+###
+
 # @name UpdateTeamAgent
 PUT {{host}}/teams/{{teamId}}/agents
 Content-Type: application/json
@@ -114,7 +122,7 @@ Content-Type: application/json
     "requesterId":"{{userId}}",
     "agentId":"{{userId}}",
     "teamId":"{{teamId}}",
-    "description": "{{teamId}}",
+    "description": "test ticket",
     "status": "OPEN"
 }
 ###

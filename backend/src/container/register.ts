@@ -48,7 +48,9 @@ container.register({
 });
 //MIDDLEWARES
 container.register({
-    authMiddleware: awilix.asClass(require("@middlewares/auth.middleware").default)
+    authMiddleware: awilix.asClass(require("@middlewares/auth.middleware").default),
+    rbacMiddleware: awilix.asClass(require("@middlewares/rbac.middleware").default),
+    
 });
 //SERVICES
 container.register({

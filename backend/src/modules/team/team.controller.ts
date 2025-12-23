@@ -51,7 +51,7 @@ export default class TeamController {
         await this.service.removeAgent(agent);
         res.status(HttpStatus.OK).json({ ok: true });
     }
-    
+
     async getTeamAgents(req: AuthRequest, res: Response) {
         const teamId = uuid().parse(req.params.id);
         const team = await this.service.getTeamAgents(teamId);
@@ -62,5 +62,11 @@ export default class TeamController {
         const agent = UpdateTeamAgent.parse(req.body)
         await this.service.updateTeamAgent(agent);
         res.status(HttpStatus.OK).json({ ok: true });
+    }
+
+    async getTeamTickets(req: AuthRequest, res: Response) {
+        const teamId = uuid().parse(req.params.id); 
+        const tickets = await this.service.getTeamTickets(teamId);
+        res.status(HttpStatus.OK).json({ ok: true, tickets });
     }
 }
