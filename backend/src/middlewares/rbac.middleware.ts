@@ -4,13 +4,14 @@ import { uuid } from "zod";
 import UserService from "@module/user/user.service";
 import ApiError from "@utils/apiError";
 import HttpStatus from "@constants/httpStatuses";
+import TicketService from "@module/ticket/ticket.service";
 //Role-based access control
 export default class RBAC {
-    constructor(private userService: UserService) { }
+    constructor(private userService: UserService, private ticketService:TicketService) { }
 
     requireTeamRole(
-        allowedRoles: string[], 
-        teamIdSource: "body" | "params" = "params", 
+        allowedRoles: string[],
+        teamIdSource: "body" | "params" = "params",
         teamIdField: string = "id"
     ) {
         return async (req: AuthRequest, res: Request, next: NextFunction) => {
@@ -28,8 +29,51 @@ export default class RBAC {
             next();
         }
     }
+    requireTeamPermission(
+        requiredPermission: string,
+        teamIdSource: "body" | "params" = "params",
+        teamIdField: string = "id"
+    ) {
+        return async (req: AuthRequest, res: Request, next: NextFunction) => {
+            const { id: userId } = req.user;
+            const teamId = uuid().parse(req[teamIdSource][teamIdField]);
+            const permissions = await this.userService.getUserTeamPermissions(userId, teamId);
 
-    requireOwnership(){
-        
+            if (permissions === null) {
+                throw new ApiError(HttpStatus.FORBIDDEN, "The user doesn't have any permissions in the team");
+            }
+            if (!permissions.includes(requiredPermission)) {
+                throw new ApiError(HttpStatus.FORBIDDEN, "The user doesn't have the required permission");
+            }
+            next();
+        }
+    }
+
+    requireTeamTicketPermission(
+        requiredPermission: string,
+        ticketIdSource: "body" | "params" = "params",
+        ticketIdField: string = "id"
+    ) {
+        return async (req: AuthRequest, res: Request, next: NextFunction) => {
+            const { id: userId } = req.user;
+            const ticketId = uuid().parse(req[ticketIdSource][ticketIdField]);
+            const ticket = await this.ticketService.getTicket(ticketId);
+            if(ticket === null){
+                throw new ApiError(HttpStatus.FORBIDDEN, "Ticket not found");
+                
+            }
+            const permissions = await this.userService.getUserTeamPermissions(userId, ticket.teamId);
+            if (permissions === null) {
+                throw new ApiError(HttpStatus.FORBIDDEN, "The user doesn't have any permissions in the team");
+            }
+            if (!permissions.includes(requiredPermission)) {
+                throw new ApiError(HttpStatus.FORBIDDEN, "The user doesn't have the required permission");
+            }
+            next();
+        }
+    }
+
+    requireOwnership() {
+
     }
 }

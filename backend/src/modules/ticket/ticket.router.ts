@@ -1,22 +1,22 @@
 import container from "@container/register";
 import { Router } from "express";
-import roles from "@constants/roles";
 const router = Router();
 const controller = container.resolve("ticketController");
 const auth = container.resolve("authMiddleware");
 const authUser = auth.authUser.bind(auth);
 const rbac = container.resolve("rbacMiddleware");
-const requireTeamRole = rbac.requireTeamRole.bind(rbac);
-
+const requireTeamPermission = rbac.requireTeamPermission.bind(rbac);
 router.get(
     "/tickets/:id", 
-    authUser, 
+    authUser,
+    requireTeamPermission("read_ticket","body","teamId"),
     controller.getTicket.bind(controller)
 );
 
 router.get(
     "/tickets/:id/logs", 
-    authUser, 
+    authUser,
+    requireTeamPermission("read_ticket_logs","body","teamId"),
     controller.getTicketLogs.bind(controller)
 );
 
@@ -29,7 +29,7 @@ router.get(
 router.post(
     "/tickets",
     authUser,
-    requireTeamRole([roles.REQUESTER,roles.AGENT,roles.ADMIN], "body", "teamId"),
+    requireTeamPermission("create_ticket","body","teamId"),
     controller.createTicket.bind(controller)
 );
 
