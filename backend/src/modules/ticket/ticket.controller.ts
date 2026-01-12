@@ -38,7 +38,7 @@ export default class TicketController {
     async createTicketComment(req: AuthRequest, res: Response) {
         const newComment = CreateTicketComment.parse(req.body);
         await this.service.createTicketComment(newComment);
-        res.status(HttpStatus.OK).json({ ok: true });
+        res.status(HttpStatus.CREATED).json({ ok: true });
     }
 
     async updateTicketAgent(req: AuthRequest, res: Response) {

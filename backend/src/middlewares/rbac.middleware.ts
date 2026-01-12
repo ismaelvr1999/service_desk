@@ -5,9 +5,14 @@ import UserService from "@module/user/user.service";
 import ApiError from "@utils/apiError";
 import HttpStatus from "@constants/httpStatuses";
 import TicketService from "@module/ticket/ticket.service";
+import TeamService from "@module/team/team.service";
 //Role-based access control
 export default class RBAC {
-    constructor(private userService: UserService, private ticketService:TicketService) { }
+    constructor(
+        private userService: UserService,
+        private ticketService: TicketService,
+        private teamService: TeamService,
+    ) { }
 
     requireTeamRole(
         allowedRoles: string[],
@@ -58,9 +63,9 @@ export default class RBAC {
             const { id: userId } = req.user;
             const ticketId = uuid().parse(req[ticketIdSource][ticketIdField]);
             const ticket = await this.ticketService.getTicket(ticketId);
-            if(ticket === null){
+            if (ticket === null) {
                 throw new ApiError(HttpStatus.FORBIDDEN, "Ticket not found");
-                
+
             }
             const permissions = await this.userService.getUserTeamPermissions(userId, ticket.teamId);
             if (permissions === null) {
@@ -73,7 +78,13 @@ export default class RBAC {
         }
     }
 
-    requireOwnership() {
-
+    async requireTeamOwnership(req: AuthRequest, res: Request, next: NextFunction) {
+        const { id: userId } = req.user;
+        const teamId = req.params.id;
+        const isUserOwner = await this.teamService.isUserTeamOwner(userId, teamId);
+        if (!isUserOwner) {
+            throw new ApiError(HttpStatus.FORBIDDEN, "The user doesn't have any permissions in the team");
+        }
+        next();
     }
 }

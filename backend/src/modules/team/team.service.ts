@@ -106,8 +106,22 @@ export default class TeamService {
             }
         });
         if (team === null) {
-            throw new ApiError(HttpStatus.NOT_FOUND,"Team not found")
+            throw new ApiError(HttpStatus.NOT_FOUND, "Team not found")
         }
         return team.tickets
+    }
+
+    async isUserTeamOwner(userId: string, teamId: string) {
+        const team = await this.prisma.team.findUnique({
+            where: {
+                ownerId: userId,
+                id: teamId
+            }
+        });
+
+        if (team === null) {
+            return false;
+        }
+        return true;
     }
 }
