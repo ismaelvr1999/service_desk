@@ -1,0 +1,20 @@
+@import "tailwindcss";
+
+:root {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+@theme {
+  --color-body: #cad3f5;
+  --color-subtext-1: #B8C0E0;
+  --color-subtext-0: #A5ADCB;
+  --color-primary: #24273a;
+  --color-menu: #181926;
+  --color-submenu: #1E2030;
+  --color-lavander: #B7BDF8;
+  --color-peach: #F5A97F;
+  --color-yellow: #EED49F;
+  --color-blue: #8AADF4;
+  --color-red: #ED8796;
+}
