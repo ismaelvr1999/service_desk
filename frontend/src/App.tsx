@@ -1,13 +1,19 @@
-import './App.css'
-
-function App() {  
+import './App.css';
+import { BrowserRouter, Routes, Route } from 'react-router';
+import { AuthLayout } from '@layouts/auth-layout';
+import { LoginPage, SignUpPage } from '@features/auth';
+function App() {
   return (
-    <div className='w-screen h-screen bg-primary'>
-      <h1 className='font-bold text-4xl text-body'>Hello World</h1>
-      <h1 className='font-bold text-4xl text-subtext-1'>Hello World</h1>
-      <h1 className='font-bold text-4xl text-subtext-0'>Hello World</h1>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path='/' element={<h1 className="text-black">Welcome</h1>} />
+        <Route element={<AuthLayout/>}>
+            <Route path='/login' element={<LoginPage />}></Route>
+            <Route path='/signup' element={<SignUpPage />}></Route>
+        </Route>
+      </Routes>
+    </BrowserRouter>
   )
 }
 
-export default App
+export default App;
