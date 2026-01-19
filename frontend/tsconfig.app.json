@@ -18,6 +18,7 @@
       "@features/*": ["src/features/*"],
       "@layouts/*": ["src/layouts/*"],
       "@shared/*": ["src/shared/*"],
+      "@app/*": ["src/app/*"],
     },
     /* Bundler mode */
     "moduleResolution": "bundler",
