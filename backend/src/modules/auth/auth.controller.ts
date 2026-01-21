@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import AuthService from "./auth.service";
 import { CreateUser, UserCredentials } from "@module/user/user.schema";
 import HttpStatus from "@constants/httpStatuses";
+import { AuthRequest } from "@/src/types/auth.type";
 
 export default class AuthController {
     private service: AuthService;
@@ -18,12 +19,17 @@ export default class AuthController {
     async login(req: Request, res: Response) {
         const userCredentials = UserCredentials.parse(req.body);
         const { token, profile } = await this.service.login(userCredentials);
-        res.cookie("auth",token,{
+        res.cookie("auth", token, {
             httpOnly: true,
             secure: false,
             sameSite: "lax",
-            path:"/"
+            path: "/"
         });
         res.status(HttpStatus.OK).json({ ok: true, profile: profile });
+    }
+
+    async verify(req: AuthRequest, res: Response) {
+        const profile = req.user
+        res.status(HttpStatus.OK).json({ ok: true, profile })
     }
 }

@@ -1,10 +1,13 @@
 import { Outlet, Navigate } from "react-router";
 import { useAppSelector } from "@app/hooks";
-import { selectIsUserAuth} from "@features/auth";
+import { selectIsUserAuth ,selectLoading} from "@features/auth";
+import Spinner from "./spinner";
 const ProtectedRouters = () => {
     const isUserAuth = useAppSelector(selectIsUserAuth);
-    //const dispatch = useAppDispatch();
-    console.log(isUserAuth)
+    const loading = useAppSelector(selectLoading);
+    if(loading){
+        return <Spinner />
+    }
     return isUserAuth ? <Outlet /> : <Navigate to="login" replace />
 }
 

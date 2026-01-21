@@ -30,6 +30,10 @@ Content-Type: application/json
 ###
 @userId = {{login.response.body.profile.id}}
 
+# @name VerifyAuth
+POST {{host}}/verify
+###
+
 # @name GetUserProfile
 GET {{host}}/users/profile
 ###

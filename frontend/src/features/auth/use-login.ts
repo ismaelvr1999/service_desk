@@ -8,7 +8,8 @@ import {
     type FormLogin, 
     signIn, 
     formLoginSchema,
-    userSchema
+    userSchema,
+    setLoading
 } from "@features/auth";
 const useLogin = () => {
     const { register, handleSubmit } = useForm<FormLogin>({
@@ -22,6 +23,7 @@ const useLogin = () => {
             const user = userSchema.parse(result.data.profile);
             dispatch(setIsUserAuth(true));
             dispatch(setUser(user));
+            dispatch(setLoading(false));
             nav("/home");
         } catch (error) {
             console.error((error as Error).message)
