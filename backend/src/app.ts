@@ -5,11 +5,18 @@ import morgan from "morgan";
 import router from "./router";
 import { ZodError } from "zod";
 import cookieParser from "cookie-parser";
+import cors from "cors"
+import container from "@container/register";
 const app = express();
+const frontendURL = container.resolve("frontendURL");
 
 app.use(express.json());
 app.use(morgan("dev"));
 app.use(cookieParser());
+app.use(cors({
+    origin: frontendURL,
+    credentials: true
+}))
 
 app.get("/", async (req, res) => {
     res.status(200).json({ ok: true, status: HttpStatus.OK });

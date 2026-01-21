@@ -12,7 +12,8 @@ const {
     DATABASE_PORT,
     CONNECTION_LIMIT,
     NODE_ENV,
-    JWT_SECRET
+    JWT_SECRET,
+    FRONTEND_URL
 } = process.env;
 
 const dbConfig = {
@@ -36,7 +37,8 @@ container.register({
     port: awilix.asValue(PORT),
     dbConfig: awilix.asValue(dbConfig),
     debugging: awilix.asValue(NODE_ENV === "development"),
-    secret: awilix.asValue(JWT_SECRET)
+    secret: awilix.asValue(JWT_SECRET),
+    frontendURL: awilix.asValue(FRONTEND_URL)
 })
 //DB Client
 container.register({
