@@ -6,6 +6,7 @@ import ProtectedRouters from '@shared/components/protected-routers';
 import VerifyAuth from '@features/auth/verify-auth';
 import LandingPage from '@features/landing/landing-page';
 import UserLayout from '@layouts/user-layout';
+import { TeamsPage } from '@features/teams/teams-page';
 function App() {
   return (
     <BrowserRouter>
@@ -22,6 +23,7 @@ function App() {
           <Route element={<ProtectedRouters />}>
             <Route element={<UserLayout />}>
               <Route path='/home' element={<h1 className="text-2xl text-body">Welcome Home</h1>}></Route>
+              <Route path='/teams' element={<TeamsPage />}></Route>
             </Route>
           </Route>
 
