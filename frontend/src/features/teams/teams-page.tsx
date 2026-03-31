@@ -1,4 +1,9 @@
+import { useState } from "react"
+
 export function TeamsPage() {
+    let [currentTab, setCurrentTab] = useState<"teams" | "agents">("agents");
+    let activeTabStyle = "text-xl cursor-pointer text-primary bg-body px-4 border rounded-xl";
+    let noActiveTabStyle = "text-xl cursor-pointer text-body px-4";
     return (
         <div className="flex w-full h-full">
             {/* main content*/}
@@ -7,12 +12,12 @@ export function TeamsPage() {
                 <div className="flex items-center h-fit">
                     <div className="flex h-full items-center">
                         {/* tabs */}
-                        <h1 className="text-xl cursor-pointer text-primary bg-body px-4 border rounded-xl">
+                        <button  className={currentTab == "agents" ? activeTabStyle : noActiveTabStyle} onClick={ () => setCurrentTab("agents")}>
                             Agents
-                        </h1>
-                        <h1 className="text-xl cursor-pointer text-body px-4">
+                        </button>
+                        <button  className={currentTab == "teams" ? activeTabStyle : noActiveTabStyle} onClick={() => setCurrentTab("teams")}>
                             Teams
-                        </h1>
+                        </button>
                     </div>
                     {/* search */}
                     <div className="flex items-center h-full gap-2 ml-auto">
@@ -38,10 +43,65 @@ export function TeamsPage() {
                         + Add
                     </button>
                 </div>
+                {/* agents table */}
+                {
+                    currentTab === "agents" && (
+                        <table className="w-full text-body text-left">
+                            <thead className="text-2xl">
+                                <tr>
+                                    <th className="p-2">Name</th>
+                                    <th className="p-2">Role</th>
+                                </tr>
+                            </thead>
+                            <tbody className="text-xl">
+                                <tr className="border-t border-b">
+                                    <td className="p-2">Foo</td>
+                                    <td className="p-2">bar</td>
+                                </tr>
+                                <tr className="border-t border-b">
+                                    <td className="p-2">Foo</td>
+                                    <td className="p-2">bar</td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    )
+                }
+
+                {/* team table */}
+                {
+                    currentTab === "teams" && (
+                        <table className="w-full text-body text-left">
+                            <thead className="text-2xl">
+                                <tr>
+                                    <th className="p-2">Name</th>
+                                    <th className="p-2">Created at</th>
+                                </tr>
+                            </thead>
+                            <tbody className="text-xl">
+                                <tr className="border-t border-b">
+                                    <td className="p-2">Foo</td>
+                                    <td className="p-2">bar</td>
+                                </tr>
+                                <tr className="border-t border-b">
+                                    <td className="p-2">Foo</td>
+                                    <td className="p-2">bar</td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    )
+                }
             </div>
             {/* Details */}
-            <div className="h-full w-1/6 bg-submenu">
-                <p className="text-body"> Details</p>
+            <div className="h-full w-1/6 bg-submenu  pt-5 px-4">
+                <div className="flex">
+                    <p className="text-body text-3xl font-bold flex-1 text-center">Details</p>
+
+                    <svg xmlns="http://www.w3.org/2000/svg" className="text-body" width="30" height="30" viewBox="0 0 24 24">
+                        <path fill="currentColor" d="m16 2.012l3 3L16.713 7.3l-3-3zM4 14v3h3l8.299-8.287l-3-3zm0 6h16v2H4z" />
+                    </svg>
+                </div>
             </div>
         </div>
     )

@@ -20,16 +20,17 @@ cd service_desk
 cd backend
 pnpm install
 ```
-3. Set up environment varibles
+3. Set up environment varibles. [prisma database varibles ](https://www.prisma.io/docs/prisma-orm/quickstart/mysql#4-initialize-prisma-orm)
 
 ```env 
-PORT = 
+PORT = 5000
 JWT_SECRET = 
+FRONTEND_URL = 
 
 DATABASE_URL=
 DATABASE_USER=
 DATABASE_PASSWORD=
-DATABASE_NAME=
+DATABASE_NAME= http://localhost:5173
 DATABASE_HOST=
 DATABASE_PORT=
 CONNECTION_LIMIT=  
@@ -41,5 +42,21 @@ npx prisma db push
 pnpm run generate
 ```
 5. Start server
+```bash 
+pnpm run dev
+```
+## Frontend
+
+1. Install dependencies
+```bash
+cd frontend
+pnpm install
+```
+2. Set up environment varibles.
+
+```env 
+VITE_API_URL = http://localhost:5000/api/
+```
+3. Start frontend
 ```bash 
 pnpm run dev
