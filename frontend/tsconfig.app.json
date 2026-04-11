@@ -13,12 +13,11 @@
       "vite/client"
     ],
     "skipLibCheck": true,
-    "baseUrl": ".",
     "paths": {
-      "@features/*": ["src/features/*"],
-      "@layouts/*": ["src/layouts/*"],
-      "@shared/*": ["src/shared/*"],
-      "@app/*": ["src/app/*"],
+      "@features/*": ["./src/features/*"],
+      "@layouts/*": ["./src/layouts/*"],
+      "@shared/*": ["./src/shared/*"],
+      "@app/*": ["./src/app/*"],
     },
     /* Bundler mode */
     "moduleResolution": "bundler",
